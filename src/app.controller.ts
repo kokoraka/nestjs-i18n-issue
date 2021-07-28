@@ -7,6 +7,7 @@ export class AppController {
 
   @Get()
   status(): unknown {
-    return this.appService.status();
+    const message = this.appService.status();
+    return { code: "200", ...message };
   }
 }

@@ -34,7 +34,6 @@ $ npm run test:cov
 ```
 
 ## Stay in touch
-
 - Author - [Raka Suryaardi Widjaja](https://idaman.id)
 
 ## License

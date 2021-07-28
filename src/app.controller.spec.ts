@@ -15,8 +15,8 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return {status: ok}', () => {
-      expect(appController.status()).toEqual({ status: 'ok' });
+    it('should return status ok', () => {
+      expect(appController.status()).toEqual({ code: '200', message: 'ok' });
     });
   });
 });
