@@ -3,6 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
 import { HttpExceptionFilter } from './../src/http-exception.filter';
+import { TransformInterceptor } from './../src/transform.interceptor';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -14,22 +15,28 @@ describe('AppController (e2e)', () => {
 
     app = moduleFixture.createNestApplication();
     app.useGlobalFilters(new HttpExceptionFilter());
+    app.useGlobalInterceptors(new TransformInterceptor());
     await app.init()
   });
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect({ code: '200', message: 'ok' });
+  describe('root - homepage resource', () => {
+    it('should return valid code and message', () => {
+      return request(app.getHttpServer())
+        .get('/')
+        .expect(200)
+        .expect({ code: '200', message: 'ok' });
+    });
   });
 
-  it('/not-found', () => {
-    return request(app.getHttpServer()).get('/not-found')
-      .expect(404)
-      .expect({
-        code: '404',
-        message: 'Cannot GET /not-found',
-      });
+  describe('not found resource', () => {
+    it('should return valid code and message', () => {
+      return request(app.getHttpServer()).get('/not-found')
+        .expect(404)
+        .expect({
+          code: '404',
+          message: 'Cannot GET /not-found',
+        });
+    });
   });
+
 });
