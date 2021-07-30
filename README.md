@@ -33,6 +33,9 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Documentation
+- [API Documentation](doc/README.md)
+
 ## Stay in touch
 - Author - [Raka Suryaardi Widjaja](https://idaman.id)
 

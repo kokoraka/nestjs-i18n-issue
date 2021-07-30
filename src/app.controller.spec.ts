@@ -10,13 +10,12 @@ describe('AppController', () => {
       controllers: [AppController],
       providers: [AppService],
     }).compile();
-
     appController = app.get<AppController>(AppController);
   });
 
-  describe('root', () => {
-    it('should return status ok', () => {
-      expect(appController.status()).toEqual({ code: '200', message: 'ok' });
+  describe('status()', () => {
+    it('should return message ok', () => {
+      expect(appController.status()).toEqual({ message: 'ok' });
     });
   });
 });
