@@ -11,8 +11,8 @@ API Documentation
 
 ## Index
 - [**Status** ✅ ](#status)
-- [**Merchant List** ❌ ](#merchant-list)
-- [**Merchant Detail** ❌ ](#merchant-detail)
+- [**Merchant List** ⭕ ](#merchant-list)
+- [**Merchant Detail** ⭕ ](#merchant-detail)
 - [**Create Merchant** ⭕ ](#create-merchant)
 
 ---
@@ -36,17 +36,24 @@ API Documentation
 }
 ```
 
-### Merchant List ❌
+### Merchant List ⭕
 - Endpoint: **GET /v1/merchant**
+
+**Request Query**
+```json
+{
+  "id": "custom-id"
+}
+```
 
 **Success Response**
 ```json
 {
   "code": "200",
-  "message": "ok",
+  "message": "Success get merchant list",
   "data": [
     {
-      "id": "custom",
+      "id": "id",
       "name": "name"
     }
   ]
@@ -62,15 +69,14 @@ API Documentation
 }
 ```
 
-
-### Merchant Detail ❌
+### Merchant Detail ⭕
 - Endpoint: **GET /v1/merchant/:id**
 
 **Success Response**
 ```json
 {
   "code": "200",
-  "message": "ok",
+  "message": "Success get merchant detail",
   "data": {
     "id": "id",
     "name": "name"
@@ -82,7 +88,7 @@ API Documentation
 ```json
 {
   "code": "404",
-  "message": "Resource notfound"
+  "message": "Not Found"
 }
 ```
 
