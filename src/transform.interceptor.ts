@@ -14,6 +14,7 @@ implements NestInterceptor<DataType, Response<DataType>>
 {
 
   /** 
+   * @description
    * this mapping is build for:
    * 1. marshall final data with `data` property
    * 2. append status `code` and `message`
@@ -42,7 +43,11 @@ implements NestInterceptor<DataType, Response<DataType>>
               data.result :
               (
                 !data.message && !data.code ?
-                data : 
+                (
+                  typeof data === "object" || Array.isArray(data) ?
+                  data :
+                  undefined
+                ) : 
                 undefined
               )
       }))
