@@ -50,9 +50,12 @@ export class MerchantService
     return Promise.resolve(merchant);
   }
 
-  remove(id: string) 
+  async remove(identifier: string): Promise<boolean> 
   {
-    return `This action removes a #${id} merchant`;
+    if (identifier === "invalid") {
+      return Promise.reject(new NotFoundException());
+    }
+    return true;
   }
   
 }

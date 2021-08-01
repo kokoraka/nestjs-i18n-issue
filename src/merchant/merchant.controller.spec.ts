@@ -42,7 +42,13 @@ describe('MerchantController', () => {
         id: "custom-id",
         name: "custom-name"
       }
-    })
+    }),
+    remove: jest.fn((identifier) => {
+      if (identifier === "invalid") {
+        throw new NotFoundException();
+      }
+      return true;
+    }),
   };
 
   beforeEach(async () => {
@@ -155,6 +161,22 @@ describe('MerchantController', () => {
 
       await expect(controller.update("invalid", updateMerchantDto)).rejects.toThrow(NotFoundException);
       expect(mockMerchantService.update).toHaveBeenCalledWith("invalid", updateMerchantDto);
+    });
+  });
+
+  describe('remove()', () => {
+    it('should return valid data when valid param passed', async () => {
+      const result = await controller.remove("custom-id");
+
+      expect(result).toEqual({
+        message: 'Success remove merchant'
+      });
+      expect(mockMerchantService.remove).toHaveBeenCalledWith("custom-id");
+    });
+    it('should throw NotFoundException when invalid param passed', async () => {
+
+      await expect(controller.remove("invalid")).rejects.toThrow(NotFoundException);
+      expect(mockMerchantService.remove).toHaveBeenCalledWith("invalid");
     });
   });
 

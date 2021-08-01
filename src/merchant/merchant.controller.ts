@@ -55,10 +55,14 @@ export class MerchantController
     }
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) 
+  @Delete(':identifier')
+  async remove(@Param('identifier') identifier: string) 
   {
-    return this.merchantService.remove(id);
+    await this.merchantService.remove(identifier);
+
+    return {
+      message: 'Success remove merchant'
+    }
   }
 
 }

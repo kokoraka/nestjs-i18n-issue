@@ -95,7 +95,24 @@ describe('MerchantService', () => {
       await expect(service.update("invalid", updateMerchantDto)).rejects
         .toThrowError(NotFoundException);
     });
+  });
 
+  describe('remove()', () => {
+    it('should be defined', () => {
+      expect(service.remove).toBeDefined();
+    });
+
+    it('should return true when valid identifier passed', async () => {
+      const result = await service.remove("custom-id");
+
+      expect(result).toEqual(true);
+    });
+
+    it('should throw NotFoundException when invalid identifier passed', async () => {
+
+      await expect(service.remove("invalid")).rejects
+        .toThrowError(NotFoundException);
+    });
   });
 
 });

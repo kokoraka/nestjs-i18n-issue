@@ -15,6 +15,7 @@ API Documentation
 - [**Merchant Detail** ⭕ ](#merchant-detail)
 - [**Create Merchant** ⭕ ](#create-merchant)
 - [**Update Merchant** ⭕ ](#update-merchant)
+- [**Remove Merchant** ⭕ ](#remove-merchant)
 
 ---
 
@@ -134,7 +135,7 @@ API Documentation
 ```
 
 ### Update Merchant ⭕
-- Endpoint: **PATCH /v1/merchant**
+- Endpoint: **PATCH /v1/merchant/:id**
 
 **Request Body**
 ```json
@@ -178,5 +179,24 @@ API Documentation
       "message": "name should not be empty"
     }
   ]
+}
+```
+
+### Remove Merchant ⭕
+- Endpoint: **DELETE /v1/merchant/:id**
+
+**Success Response**
+```json
+{
+  "code": "200",
+  "message": "Success remove merchant"
+}
+```
+
+**Notfound Response**
+```json
+{
+  "code": "404",
+  "message": "Not Found"
 }
 ```
