@@ -8,3 +8,11 @@ export class CreateMerchantDto {
   name: string
 
 }
+
+export class CreateMerchantResultDto
+{
+
+  id: string;
+  name: string;
+  
+}

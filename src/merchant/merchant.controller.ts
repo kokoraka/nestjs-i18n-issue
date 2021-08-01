@@ -12,34 +12,41 @@ import { CreateMerchantDto } from './dto/create-merchant.dto';
 import { UpdateMerchantDto } from './dto/update-merchant.dto';
 
 @Controller('/v1/merchant')
-export class MerchantController {
+export class MerchantController 
+{
   constructor(private readonly merchantService: MerchantService) {}
 
   @Post()
-  create(@Body() createMerchantDto: CreateMerchantDto) {
+  create(@Body() createMerchantDto: CreateMerchantDto) 
+  {
     return this.merchantService.create(createMerchantDto);
   }
 
   @Get()
-  findAll() {
+  findAll() 
+  {
     return this.merchantService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.merchantService.findOne(+id);
+  findOne(@Param('id') id: string) 
+  {
+    return this.merchantService.findOne(id);
   }
 
   @Patch(':id')
   update(
     @Param('id') id: string,
     @Body() updateMerchantDto: UpdateMerchantDto,
-  ) {
-    return this.merchantService.update(+id, updateMerchantDto);
+  ) 
+  {
+    return this.merchantService.update(id, updateMerchantDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.merchantService.remove(+id);
+  remove(@Param('id') id: string) 
+  {
+    return this.merchantService.remove(id);
   }
+
 }

@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateMerchantResultDto } from './dto/create-merchant-result.dto';
-import { CreateMerchantDto } from './dto/create-merchant.dto';
+import { CreateMerchantDto, CreateMerchantResultDto } from './dto/create-merchant.dto';
 import { DetailMerchantDto } from './dto/detail-merchant.dto';
 import { ListMerchantDto } from './dto/list-merchant.dto';
 import { UpdateMerchantDto } from './dto/update-merchant.dto';
@@ -24,17 +23,17 @@ export class MerchantService
     ];
   }
 
-  findOne(id: number): DetailMerchantDto 
+  findOne(id: string): DetailMerchantDto 
   {
     return { id: id.toString(), name: "name" };
   }
 
-  update(id: number, updateMerchantDto: UpdateMerchantDto) 
+  update(id: string, updateMerchantDto: UpdateMerchantDto) 
   {
     return `This action updates a #${id} merchant`;
   }
 
-  remove(id: number) 
+  remove(id: string) 
   {
     return `This action removes a #${id} merchant`;
   }
