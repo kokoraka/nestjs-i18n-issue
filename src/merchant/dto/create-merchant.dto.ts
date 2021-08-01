@@ -9,10 +9,22 @@ export class CreateMerchantDto {
 
 }
 
+interface CreateMerchantResult
+{
+  id: string,
+  name: string,
+}
+
 export class CreateMerchantResultDto
 {
 
-  id: string;
-  name: string;
+  public id: string;
+  public name: string;
+
+  constructor({ id, name }: CreateMerchantResult)
+  {
+    this.id = id;
+    this.name = name;
+  }
   
 }

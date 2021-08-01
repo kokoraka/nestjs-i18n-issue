@@ -76,14 +76,13 @@ describe('CreateMerchantResult DTO', () => {
   let createMerchantResult: CreateMerchantResultDto;
 
   beforeEach(() => {
-    createMerchantResult = new CreateMerchantResultDto();
+    createMerchantResult = new CreateMerchantResultDto({
+      id: "cusotom-id",
+      name: "custom-name"
+    });
   });
   
   describe('class definition', () => {
-    beforeEach(() => {
-      createMerchantResult.id = "custom-id";
-      createMerchantResult.name = "custom-name";
-    });
 
     it('should be defined', () => {
       expect(createMerchantResult).toBeDefined();

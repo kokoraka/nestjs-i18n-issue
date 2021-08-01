@@ -10,10 +10,10 @@ export class MerchantService
 
   create(createMerchantDto: CreateMerchantDto): CreateMerchantResultDto 
   {
-    return {
+    return new CreateMerchantResultDto({
       id: "random-id",
       ...createMerchantDto
-    };
+    });
   }
 
   findAll(): ListMerchantDto[] 
