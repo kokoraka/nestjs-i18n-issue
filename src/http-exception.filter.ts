@@ -7,13 +7,6 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 
-interface ValidationException
-{
-  statusCode: number,
-  error: string,
-  message: string[]
-}
-
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter 
 {
@@ -21,13 +14,10 @@ export class HttpExceptionFilter implements ExceptionFilter
   catch(exception: HttpException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
-    const exceptionData = exception.getResponse() as ValidationException;
     
     let httpResponse: HttpResponse;
 
-    if (exception instanceof BadRequestException &&
-      Array.isArray(exceptionData.message)) {
-      
+    if (exception instanceof BadRequestException) {
       httpResponse = new InvalidDataResponse(exception).make();
     }
     else {
@@ -109,7 +99,12 @@ class InvalidDataResponse extends ResponseFactory
 
   public createResponseBody()
   {
-    const exceptionData = this.exception.getResponse() as ValidationException;
+    /**
+     * `exceptionData.message` should contain an array of validation exceptions 
+     * because we're already format it when using `ValidationPipe`
+     * we specify `exceptionFactory` in `main.ts`
+     */
+    const exceptionData = this.exception.getResponse() as { message: string[] };
     const validationErrors =  exceptionData.message;
     return new InvalidDataResponseBody(
       '422', 'Invalid data', validationErrors
