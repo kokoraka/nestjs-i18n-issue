@@ -19,7 +19,7 @@ export class MerchantService
   findAll(): ListMerchantDto[] 
   {
     return [
-      { id: "custom", name: "name" }
+      { id: "random-id", name: "name" }
     ];
   }
 

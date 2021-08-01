@@ -38,9 +38,14 @@ describe('MerchantController', () => {
     it('should return valid data when created', () => {
       const merchantData = new CreateMerchantDto();
       merchantData.name = 'Merchant Name';
-      expect(controller.create(merchantData)).toEqual({
-        id: expect.any(String),
-        name: 'Merchant Name'
+      const result = controller.create(merchantData);
+
+      expect(result).toEqual({
+        message: 'Success create merchant',
+        result: {
+          id: expect.any(String),
+          name: 'Merchant Name'
+        }
       });
       expect(mockMerchantService.create).toHaveBeenCalledWith(merchantData);
     });

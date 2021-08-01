@@ -19,7 +19,11 @@ export class MerchantController
   @Post()
   create(@Body() createMerchantDto: CreateMerchantDto) 
   {
-    return this.merchantService.create(createMerchantDto);
+    const result = this.merchantService.create(createMerchantDto);
+    return {
+      message: 'Success create merchant',
+      result: result
+    };
   }
 
   @Get()

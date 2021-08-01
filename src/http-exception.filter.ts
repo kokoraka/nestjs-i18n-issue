@@ -7,21 +7,12 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 
-interface ResponseBody 
-{
-  code: string,
-  message: string,
-  validation_errors?: string[]
-}
-
 interface ValidationException
 {
   statusCode: number,
   error: string,
   message: string[]
 }
-
-const BAD_REQUEST_CODE = 422;
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter 
@@ -30,24 +21,99 @@ export class HttpExceptionFilter implements ExceptionFilter
   catch(exception: HttpException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
-    const status = exception.getStatus();
+    const exceptionData = exception.getResponse() as ValidationException;
     
-    let httpCode = status;
-    let responseBody: ResponseBody = {
-      code: httpCode.toString(),
-      message: exception.message,
-    };
+    let httpResponse: HttpResponse;
 
-    if (exception instanceof BadRequestException) {
-      const exceptionData = exception.getResponse() as ValidationException;
-      if (Array.isArray(exceptionData.message)) {
-        httpCode = BAD_REQUEST_CODE;
-        responseBody.code = BAD_REQUEST_CODE.toString();
-        responseBody.validation_errors = exceptionData.message;
-      }
+    if (exception instanceof BadRequestException &&
+      Array.isArray(exceptionData.message)) {
+      
+      httpResponse = new InvalidDataResponse(exception).make();
+    }
+    else {
+      httpResponse = new DefaultResponse(exception).make();
     }
 
-    response.status(httpCode).json(responseBody);
+    response.status(httpResponse.httpCode).json(httpResponse.responseBody);
+  }
+
+}
+
+interface HttpResponse
+{
+  httpCode: number
+  responseBody: ResponseBody,
+}
+
+interface ResponseBody 
+{
+  code: string,
+  message: string
+}
+
+class DefaultResponseBody implements ResponseBody
+{
+
+  constructor(
+    public code: string, 
+    public message: string
+  ) {}
+
+}
+
+class InvalidDataResponseBody implements ResponseBody
+{
+  
+  constructor(
+    public code: string, 
+    public message: string, 
+    public validation_errors: string[]
+  ) {}
+  
+}
+
+abstract class ResponseFactory
+{
+
+  constructor(protected exception: HttpException) {}
+
+  abstract createResponseBody(): ResponseBody
+
+  public make(): HttpResponse
+  {
+    const httpCode = 200;
+    const responseBody = this.createResponseBody();
+    return {
+      httpCode: httpCode,
+      responseBody: responseBody
+    }
+  }
+  
+}
+
+class DefaultResponse extends ResponseFactory
+{
+
+  public createResponseBody()
+  {
+    const message = this.exception.message;
+    const status = this.exception.getStatus();
+    const code = status.toString();
+    return new DefaultResponseBody(code, message);
+  }
+
+}
+
+class InvalidDataResponse extends ResponseFactory
+{
+
+  public createResponseBody()
+  {
+    const exceptionData = this.exception.getResponse() as ValidationException;
+    const validationErrors =  exceptionData.message;
+    return new InvalidDataResponseBody(
+      '422', 'Invalid data', validationErrors
+    );
   }
 
 }

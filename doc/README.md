@@ -100,7 +100,7 @@ API Documentation
 ```json
 {
   "code": "201",
-  "message": "ok",
+  "message": "Success create merchant",
   "data": {
     "id": "random-id",
     "name": "Merchant Name"
@@ -112,7 +112,7 @@ API Documentation
 ```json
 {
   "code": "422",
-  "message": "Bad Request Exception",
+  "message": "Invalid data",
   "validation_errors": [
     {
       "field": "name",
