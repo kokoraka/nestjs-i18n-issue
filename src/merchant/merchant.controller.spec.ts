@@ -1,5 +1,7 @@
+import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { CreateMerchantDto } from './dto/create-merchant.dto';
+import { ListMerchantParamDto } from './dto/list-merchant.dto';
 import { MerchantController } from './merchant.controller';
 import { MerchantService } from './merchant.service';
 
@@ -13,6 +15,23 @@ describe('MerchantController', () => {
         id: "custom-id",
         ...dto
       };
+    }),
+    findAll: jest.fn((dto) => {
+      return [
+        {
+          id: "custom-id",
+          name: "custom-name"
+        }
+      ]
+    }),
+    findOne: jest.fn((dto) => {
+      if (dto === "invalid") {
+        throw new NotFoundException();
+      }
+      return {
+        id: "custom-id",
+        name: "custom-name"
+      }
     })
   };
 
@@ -35,10 +54,10 @@ describe('MerchantController', () => {
   });
 
   describe('create()', () => {
-    it('should return valid data when created', () => {
+    it('should return valid data when created', async () => {
       const merchantData = new CreateMerchantDto();
       merchantData.name = 'Merchant Name';
-      const result = controller.create(merchantData);
+      const result = await controller.create(merchantData);
 
       expect(result).toEqual({
         message: 'Success create merchant',
@@ -48,6 +67,61 @@ describe('MerchantController', () => {
         }
       });
       expect(mockMerchantService.create).toHaveBeenCalledWith(merchantData);
+    });
+  });
+
+  describe('findAll()', () => {
+    it('should return valid data when not param passed', async () => {
+      const merchantData = new ListMerchantParamDto();
+      const result = await controller.findAll(merchantData);
+
+      expect(result).toEqual({
+        message: 'Success get merchant list',
+        result: expect.arrayContaining([
+          expect.objectContaining({
+            id: expect.any(String),
+            name: expect.any(String),
+          })
+        ])
+      });
+      expect(mockMerchantService.findAll).toHaveBeenCalledWith(merchantData);
+    });
+
+    it('should return valid data when id param passed', async () => {
+      const merchantData = new ListMerchantParamDto();
+      merchantData.id = "custom-id";
+      const result = await controller.findAll(merchantData);
+
+      expect(result).toEqual({
+        message: 'Success get merchant list',
+        result: expect.arrayContaining([
+          expect.objectContaining({
+            id: expect.any(String),
+            name: expect.any(String),
+          })
+        ])
+      });
+      expect(mockMerchantService.findAll).toHaveBeenCalledWith(merchantData);
+    });
+  });
+
+  describe('findOne()', () => {
+    it('should return valid data when valid param passed', async () => {
+      const result = await controller.findOne("custom-id");
+
+      expect(result).toEqual({
+        message: 'Success get merchant detail',
+        result: expect.objectContaining({
+          id: expect.any(String),
+          name: expect.any(String),
+        })
+      });
+      expect(mockMerchantService.findOne).toHaveBeenCalledWith("custom-id");
+    });
+    it('should throw NotFoundException when invalid param passed', async () => {
+
+      await expect(controller.findOne("invalid")).rejects.toThrow(NotFoundException);
+      expect(mockMerchantService.findOne).toHaveBeenCalledWith("invalid");
     });
   });
 

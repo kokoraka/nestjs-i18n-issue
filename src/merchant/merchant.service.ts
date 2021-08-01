@@ -1,31 +1,41 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateMerchantDto, CreateMerchantResultDto } from './dto/create-merchant.dto';
 import { DetailMerchantDto } from './dto/detail-merchant.dto';
-import { ListMerchantDto } from './dto/list-merchant.dto';
+import { ListMerchantDto, ListMerchantParamDto } from './dto/list-merchant.dto';
 import { UpdateMerchantDto } from './dto/update-merchant.dto';
 
 @Injectable()
 export class MerchantService 
 {
 
-  create(createMerchantDto: CreateMerchantDto): CreateMerchantResultDto 
+  async create(createMerchantDto: CreateMerchantDto): Promise<CreateMerchantResultDto> 
   {
-    return new CreateMerchantResultDto({
+    const merchant = new CreateMerchantResultDto({
       id: "random-id",
       ...createMerchantDto
     });
+    return Promise.resolve(merchant);
   }
 
-  findAll(): ListMerchantDto[] 
+  async findAll(listMerchantParamDto: ListMerchantParamDto): Promise<ListMerchantDto[]> 
   {
-    return [
-      { id: "random-id", name: "name" }
-    ];
+    const rawMerchants = [ { id: "random-id", name: "name" } ];
+    const merchants = rawMerchants.map(merchant => {
+      return new ListMerchantDto(merchant);
+    });
+    return Promise.resolve(merchants);
   }
 
-  findOne(id: string): DetailMerchantDto 
+  async findOne(identifier: string): Promise<DetailMerchantDto> 
   {
-    return { id: id.toString(), name: "name" };
+    if (identifier === "invalid") {
+      return Promise.reject(new NotFoundException());
+    }
+    const merchant = new DetailMerchantDto({
+      id: identifier, 
+      name: "name"
+    });
+    return Promise.resolve(merchant);
   }
 
   update(id: string, updateMerchantDto: UpdateMerchantDto) 

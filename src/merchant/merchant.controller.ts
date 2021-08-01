@@ -6,10 +6,12 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { MerchantService } from './merchant.service';
 import { CreateMerchantDto } from './dto/create-merchant.dto';
 import { UpdateMerchantDto } from './dto/update-merchant.dto';
+import { ListMerchantParamDto } from './dto/list-merchant.dto';
 
 @Controller('/v1/merchant')
 export class MerchantController 
@@ -17,9 +19,9 @@ export class MerchantController
   constructor(private readonly merchantService: MerchantService) {}
 
   @Post()
-  create(@Body() createMerchantDto: CreateMerchantDto) 
+  async create(@Body() createMerchantDto: CreateMerchantDto) 
   {
-    const result = this.merchantService.create(createMerchantDto);
+    const result = await this.merchantService.create(createMerchantDto);
     return {
       message: 'Success create merchant',
       result: result
@@ -27,15 +29,23 @@ export class MerchantController
   }
 
   @Get()
-  findAll() 
+  async findAll(@Query() listMerchantParamDto: ListMerchantParamDto) 
   {
-    return this.merchantService.findAll();
+    const result = await this.merchantService.findAll(listMerchantParamDto);
+    return {
+      message: 'Success get merchant list',
+      result: result
+    };
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) 
+  @Get(':identifier')
+  async findOne(@Param('identifier') identifier: string) 
   {
-    return this.merchantService.findOne(id);
+    const result = await this.merchantService.findOne(identifier);
+    return {
+      message: 'Success get merchant detail',
+      result: result
+    }
   }
 
   @Patch(':id')

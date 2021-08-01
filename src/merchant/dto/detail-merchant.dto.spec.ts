@@ -5,9 +5,10 @@ describe('DetailMerchant DTO', () => {
   let detailMerchant: DetailMerchantDto;
 
   beforeEach(() => {
-    detailMerchant = new DetailMerchantDto();
-    detailMerchant.id = "custom-id";
-    detailMerchant.name = "custom-name";
+    detailMerchant = new DetailMerchantDto({
+      id: "custom-id",
+      name: "custom-name"
+    });
   });
 
   it('should be defined', () => {

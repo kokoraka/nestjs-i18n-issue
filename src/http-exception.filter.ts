@@ -81,7 +81,7 @@ abstract class ResponseFactory
 
   public make(): HttpResponse
   {
-    const httpCode = 200;
+    const httpCode = this.exception.getStatus();
     const responseBody = this.createResponseBody();
     return {
       httpCode: httpCode,
