@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateMerchantDto, CreateMerchantResultDto } from './dto/create-merchant.dto';
 import { DetailMerchantDto } from './dto/detail-merchant.dto';
 import { ListMerchantDto, ListMerchantParamDto } from './dto/list-merchant.dto';
-import { UpdateMerchantDto } from './dto/update-merchant.dto';
+import { UpdateMerchantDto, UpdateMerchantResultDto } from './dto/update-merchant.dto';
 
 @Injectable()
 export class MerchantService 
@@ -38,9 +38,16 @@ export class MerchantService
     return Promise.resolve(merchant);
   }
 
-  update(id: string, updateMerchantDto: UpdateMerchantDto) 
+  async update(identifier: string, updateMerchantDto: UpdateMerchantDto): Promise<UpdateMerchantResultDto> 
   {
-    return `This action updates a #${id} merchant`;
+    if (identifier === "invalid") {
+      return Promise.reject(new NotFoundException());
+    }
+    const merchant = new UpdateMerchantResultDto({
+      id: identifier,
+      name: updateMerchantDto.name
+    });
+    return Promise.resolve(merchant);
   }
 
   remove(id: string) 

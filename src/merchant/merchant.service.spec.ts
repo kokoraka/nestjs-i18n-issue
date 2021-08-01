@@ -3,6 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CreateMerchantDto, CreateMerchantResultDto } from './dto/create-merchant.dto';
 import { DetailMerchantDto } from './dto/detail-merchant.dto';
 import { ListMerchantDto, ListMerchantParamDto } from './dto/list-merchant.dto';
+import { UpdateMerchantDto, UpdateMerchantResultDto } from './dto/update-merchant.dto';
 import { MerchantService } from './merchant.service';
 
 describe('MerchantService', () => {
@@ -71,6 +72,27 @@ describe('MerchantService', () => {
 
     it('should throw NotFoundException when invalid identifier passed', async () => {
       await expect(service.findOne("invalid")).rejects
+        .toThrowError(NotFoundException);
+    });
+
+  });
+
+  describe('update()', () => {
+    it('should be defined', () => {
+      expect(service.update).toBeDefined();
+    });
+
+    it('should return UpdateMerchantResultDto when valid identifier passed', async () => {
+      const updateMerchantDto = new UpdateMerchantDto();
+      const result = await service.update("custom-id", updateMerchantDto);
+
+      expect(result).toBeInstanceOf(UpdateMerchantResultDto);
+    });
+
+    it('should throw NotFoundException when invalid identifier passed', async () => {
+      const updateMerchantDto = new UpdateMerchantDto();
+
+      await expect(service.update("invalid", updateMerchantDto)).rejects
         .toThrowError(NotFoundException);
     });
 

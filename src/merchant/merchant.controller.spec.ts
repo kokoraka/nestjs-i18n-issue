@@ -2,6 +2,7 @@ import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { CreateMerchantDto } from './dto/create-merchant.dto';
 import { ListMerchantParamDto } from './dto/list-merchant.dto';
+import { UpdateMerchantDto } from './dto/update-merchant.dto';
 import { MerchantController } from './merchant.controller';
 import { MerchantService } from './merchant.service';
 
@@ -24,8 +25,17 @@ describe('MerchantController', () => {
         }
       ]
     }),
-    findOne: jest.fn((dto) => {
-      if (dto === "invalid") {
+    findOne: jest.fn((identifier) => {
+      if (identifier === "invalid") {
+        throw new NotFoundException();
+      }
+      return {
+        id: "custom-id",
+        name: "custom-name"
+      }
+    }),
+    update: jest.fn((identifier, dto) => {
+      if (identifier === "invalid") {
         throw new NotFoundException();
       }
       return {
@@ -122,6 +132,29 @@ describe('MerchantController', () => {
 
       await expect(controller.findOne("invalid")).rejects.toThrow(NotFoundException);
       expect(mockMerchantService.findOne).toHaveBeenCalledWith("invalid");
+    });
+  });
+
+  describe('update()', () => {
+    it('should return valid data when valid param passed', async () => {
+      const updateMerchantDto = new UpdateMerchantDto();
+      updateMerchantDto.name = "custom-name";
+      const result = await controller.update("custom-id", updateMerchantDto);
+
+      expect(result).toEqual({
+        message: 'Success update merchant',
+        result: expect.objectContaining({
+          id: expect.any(String),
+          name: expect.any(String),
+        })
+      });
+      expect(mockMerchantService.update).toHaveBeenCalledWith("custom-id", updateMerchantDto);
+    });
+    it('should throw NotFoundException when invalid param passed', async () => {
+      const updateMerchantDto = new UpdateMerchantDto();
+
+      await expect(controller.update("invalid", updateMerchantDto)).rejects.toThrow(NotFoundException);
+      expect(mockMerchantService.update).toHaveBeenCalledWith("invalid", updateMerchantDto);
     });
   });
 

@@ -32,7 +32,25 @@ describe('CreateMerchant DTO', () => {
         expect.arrayContaining([
           expect.objectContaining({
             "constraints": {
+              "isString": "name must be a string",
               "isNotEmpty": "name should not be empty", 
+              "maxLength": "name must be shorter than or equal to 50 characters", 
+              "minLength": "name must be longer than or equal to 10 characters"
+            }
+          })
+        ])
+      );
+    });
+
+    it('should invalid when name is not a string', async () => {
+      /** @ts-ignore */
+      createMerchant.name = 123;
+
+      await expect(validateOrReject(createMerchant)).rejects.toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            "constraints": {
+              "isString": "name must be a string",
               "maxLength": "name must be shorter than or equal to 50 characters", 
               "minLength": "name must be longer than or equal to 10 characters"
             }
@@ -66,6 +84,7 @@ describe('CreateMerchant DTO', () => {
         ])
       );
     });
+    
   });
 
 });

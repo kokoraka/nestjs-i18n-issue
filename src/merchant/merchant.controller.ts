@@ -1,12 +1,6 @@
 import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  Query,
+  Controller, Get, Post, Body,
+  Patch, Param, Delete, Query,
 } from '@nestjs/common';
 import { MerchantService } from './merchant.service';
 import { CreateMerchantDto } from './dto/create-merchant.dto';
@@ -48,13 +42,17 @@ export class MerchantController
     }
   }
 
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
+  @Patch(':identifier')
+  async update(
+    @Param('identifier') identifier: string,
     @Body() updateMerchantDto: UpdateMerchantDto,
   ) 
   {
-    return this.merchantService.update(id, updateMerchantDto);
+    const result = await this.merchantService.update(identifier, updateMerchantDto);
+    return {
+      message: 'Success update merchant',
+      result: result
+    }
   }
 
   @Delete(':id')
