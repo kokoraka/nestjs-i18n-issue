@@ -8,8 +8,10 @@ describe('Merchant Entity', () => {
     merchantEntity = new Merchant();
   });
 
-  it('should be defined', () => {
-    expect(merchantEntity).toBeDefined();
+  describe('class definition', () => {
+    it('should be defined', () => {
+      expect(merchantEntity).toBeDefined();
+    });
   });
 
 });

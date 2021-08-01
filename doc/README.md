@@ -13,6 +13,7 @@ API Documentation
 - [**Status** ✅ ](#status)
 - [**Merchant List** ❌ ](#merchant-list)
 - [**Merchant Detail** ❌ ](#merchant-detail)
+- [**Create Merchant** ⭕ ](#create-merchant)
 
 ---
 
@@ -82,5 +83,45 @@ API Documentation
 {
   "code": "404",
   "message": "Resource notfound"
+}
+```
+
+### Create Merchant ⭕
+- Endpoint: **POST /v1/merchant**
+
+**Request Body**
+```json
+{
+  "name": "Merchant Name"
+}
+```
+
+**Success Response**
+```json
+{
+  "code": "201",
+  "message": "ok",
+  "data": {
+    "id": "random-id",
+    "name": "Merchant Name"
+  }
+}
+```
+
+**Invalid Data Response**
+```json
+{
+  "code": "422",
+  "message": "Bad Request Exception",
+  "validation_errors": [
+    {
+      "field": "name",
+      "message": "name must be longer than or equal to 10 characters"
+    },
+    {
+      "field": "name",
+      "message": "name should not be empty"
+    }
+  ]
 }
 ```
