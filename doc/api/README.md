@@ -19,8 +19,8 @@ API Documentation
 
 ---
 
-### Status ✅
-- Endpoint: **GET /**
+### Status 
+- ✅ Endpoint: **GET /**
 
 **Success Response**
 ```json
@@ -38,8 +38,8 @@ API Documentation
 }
 ```
 
-### Merchant List ⭕
-- Endpoint: **GET /v1/merchant**
+### Merchant List
+- ⭕ Endpoint: **GET /v1/merchant**
 
 **Request Query**
 ```json
@@ -71,8 +71,8 @@ API Documentation
 }
 ```
 
-### Merchant Detail ⭕
-- Endpoint: **GET /v1/merchant/:id**
+### Merchant Detail
+- ⭕ Endpoint: **GET /v1/merchant/:id**
 
 **Success Response**
 ```json
@@ -94,8 +94,8 @@ API Documentation
 }
 ```
 
-### Create Merchant ⭕
-- Endpoint: **POST /v1/merchant**
+### Create Merchant
+- ⭕ Endpoint: **POST /v1/merchant**
 
 **Request Body**
 ```json
@@ -134,8 +134,8 @@ API Documentation
 }
 ```
 
-### Update Merchant ⭕
-- Endpoint: **PATCH /v1/merchant/:id**
+### Update Merchant
+- ⭕ Endpoint: **PATCH /v1/merchant/:id**
 
 **Request Body**
 ```json
@@ -182,8 +182,8 @@ API Documentation
 }
 ```
 
-### Remove Merchant ⭕
-- Endpoint: **DELETE /v1/merchant/:id**
+### Remove Merchant
+- ⭕ Endpoint: **DELETE /v1/merchant/:id**
 
 **Success Response**
 ```json
