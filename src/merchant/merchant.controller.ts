@@ -7,7 +7,10 @@ import { CreateMerchantDto } from './dto/create-merchant.dto';
 import { UpdateMerchantDto } from './dto/update-merchant.dto';
 import { ListMerchantParamDto } from './dto/list-merchant.dto';
 
-@Controller('/v1/merchant')
+@Controller({
+  path: 'merchant',
+  version: '1'
+})
 export class MerchantController 
 {
   constructor(private readonly merchantService: MerchantService) {}
