@@ -3,10 +3,9 @@ import {
   Catch,
   ArgumentsHost,
   HttpException,
-  BadRequestException,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { HttpResponse } from './http-exception.entity';
+import { HttpResponse, ValidationException } from './http-exception.entity';
 import { DefaultResponse, InvalidDataResponse } from './http-exception.factory';
 
 @Catch()
@@ -19,7 +18,7 @@ export class HttpExceptionFilter implements ExceptionFilter
     
     let httpResponse: HttpResponse;
 
-    if (exception instanceof BadRequestException) {
+    if (exception instanceof ValidationException) {
       httpResponse = new InvalidDataResponse(exception).make();
     }
     else {

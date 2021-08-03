@@ -1,5 +1,5 @@
 import { HttpException } from "@nestjs/common";
-import { DefaultResponseBody, HttpResponse, InvalidDataResponseBody, ResponseBody, ValidationError } from "./http-exception.entity";
+import { DefaultResponseBody, HttpResponse, InvalidDataResponseBody, ResponseBody, ValidationError, ValidationException } from "./http-exception.entity";
 
 
 export abstract class ResponseFactory
@@ -37,18 +37,16 @@ export class DefaultResponse extends ResponseFactory
 export class InvalidDataResponse extends ResponseFactory
 {
 
+  constructor(exception: ValidationException)
+  {
+    super(exception);
+  }
+
   public createResponseBody()
   {
-    /**
-     * `exceptionData.message` should contain an array of validation exceptions, e.g:
-     * [{ field: 'name', message: 'Invalid value' }]
-     * 
-     * The format come from `ValidationPipe.exceptionFactory` in `main.ts`
-     */    
-    const exceptionData = this.exception.getResponse() as { message: ValidationError[] };
-    const validationErrors =  exceptionData.message || [];
+    const exception = this.exception as ValidationException;
     return new InvalidDataResponseBody(
-      '422', 'Invalid data', validationErrors
+      '422', 'Invalid data', exception.errors
     );
   }
 

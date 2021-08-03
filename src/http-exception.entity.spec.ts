@@ -1,4 +1,4 @@
-import { DefaultResponseBody, HttpResponse, InvalidDataResponseBody, ResponseBody, ValidationError } from "./http-exception.entity";
+import { DefaultResponseBody, HttpResponse, InvalidDataResponseBody, ResponseBody, ValidationError, ValidationException } from "./http-exception.entity";
 
 describe('HttpResponse Interface', () => {
 
@@ -129,6 +129,38 @@ describe('InvalidDataResponseBody Class', () => {
     expect(responseBody).toHaveProperty('validation_errors');
     expect(Array.isArray(responseBody.validation_errors)).toBeTruthy();
     expect(responseBody.validation_errors).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          field: 'name',
+          message: 'Invalid value'
+        })
+      ])
+    );
+  });
+
+});
+
+describe('ValidationException Class', () => {
+
+  let exception: ValidationException;
+
+  beforeEach(() => {
+    exception = new ValidationException({
+      errors: [ { field: 'name', message: 'Invalid value' } ]
+    });
+  });
+
+  it('should containing message', () => {
+    
+    expect(exception).toHaveProperty('message');
+    expect(typeof exception.message === "string").toBeTruthy();
+  });
+
+  it('should containing errors', () => {
+    
+    expect(exception).toHaveProperty('errors');
+    expect(Array.isArray(exception.errors)).toBeTruthy();
+    expect(exception.errors).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           field: 'name',

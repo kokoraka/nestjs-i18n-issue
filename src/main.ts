@@ -1,7 +1,8 @@
-import { BadRequestException, ValidationPipe, VersioningType } from '@nestjs/common';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { ValidationError } from 'class-validator';
 import { AppModule } from './app.module';
+import { ValidationException } from './http-exception.entity';
 import { HttpExceptionFilter } from './http-exception.filter';
 import { TransformInterceptor } from './transform.interceptor';
 
@@ -21,7 +22,7 @@ async function bootstrap() {
         });
       }
     }
-    return new BadRequestException(customValidationErrors);
+    return new ValidationException({ errors: customValidationErrors });
   };
   app.useGlobalPipes(new ValidationPipe({ exceptionFactory }));
   app.useGlobalFilters(new HttpExceptionFilter());

@@ -1,5 +1,5 @@
 import { HttpException } from "@nestjs/common";
-import { DefaultResponseBody } from "./http-exception.entity";
+import { DefaultResponseBody, ValidationException } from "./http-exception.entity";
 import { DefaultResponse, InvalidDataResponse, ResponseFactory } from "./http-exception.factory";
 
 describe('ResponseFactory Class', () => {
@@ -74,7 +74,7 @@ describe('InvalidDataResponse Class', () => {
   let factory: InvalidDataResponse;
 
   beforeEach(() => {
-    const exception = new HttpException('Invalid', 422);
+    const exception = new ValidationException({ errors: [] });
     factory = new InvalidDataResponse(exception);
   });
 

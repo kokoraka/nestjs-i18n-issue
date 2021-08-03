@@ -1,4 +1,4 @@
-
+import { HttpException } from "@nestjs/common";
 
 export interface HttpResponse
 {
@@ -37,4 +37,22 @@ export class InvalidDataResponseBody implements ResponseBody
     public validation_errors: ValidationError[]
   ) {}
   
+}
+
+export class ValidationException extends HttpException
+{
+
+  private validationErrors: ValidationError[];
+
+  constructor({ errors }: { errors: ValidationError[] })
+  {
+    super('Invalid data', 422);
+    this.validationErrors = errors || [];
+  }
+
+  get errors(): ValidationError[]
+  {
+    return this.validationErrors;
+  }
+
 }
