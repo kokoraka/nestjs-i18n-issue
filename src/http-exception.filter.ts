@@ -6,6 +6,8 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { Response } from 'express';
+import { HttpResponse } from './http-exception.entity';
+import { DefaultResponse, InvalidDataResponse } from './http-exception.factory';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter 
@@ -25,90 +27,6 @@ export class HttpExceptionFilter implements ExceptionFilter
     }
 
     response.status(httpResponse.httpCode).json(httpResponse.responseBody);
-  }
-
-}
-
-interface HttpResponse
-{
-  httpCode: number
-  responseBody: ResponseBody,
-}
-
-interface ResponseBody 
-{
-  code: string,
-  message: string
-}
-
-class DefaultResponseBody implements ResponseBody
-{
-
-  constructor(
-    public code: string, 
-    public message: string
-  ) {}
-
-}
-
-class InvalidDataResponseBody implements ResponseBody
-{
-  
-  constructor(
-    public code: string, 
-    public message: string, 
-    public validation_errors: string[]
-  ) {}
-  
-}
-
-abstract class ResponseFactory
-{
-
-  constructor(protected exception: HttpException) {}
-
-  abstract createResponseBody(): ResponseBody
-
-  public make(): HttpResponse
-  {
-    const httpCode = this.exception.getStatus();
-    const responseBody = this.createResponseBody();
-    return {
-      httpCode: httpCode,
-      responseBody: responseBody
-    }
-  }
-  
-}
-
-class DefaultResponse extends ResponseFactory
-{
-
-  public createResponseBody()
-  {
-    const message = this.exception.message;
-    const status = this.exception.getStatus();
-    const code = status.toString();
-    return new DefaultResponseBody(code, message);
-  }
-
-}
-
-class InvalidDataResponse extends ResponseFactory
-{
-
-  public createResponseBody()
-  {
-    /**
-     * `exceptionData.message` should contain an array of validation exceptions 
-     * because we're already format it when using `ValidationPipe`
-     * we specify `exceptionFactory` in `main.ts`
-     */
-    const exceptionData = this.exception.getResponse() as { message: string[] };
-    const validationErrors =  exceptionData.message;
-    return new InvalidDataResponseBody(
-      '422', 'Invalid data', validationErrors
-    );
   }
 
 }
