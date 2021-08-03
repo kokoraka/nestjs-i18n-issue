@@ -3,10 +3,10 @@ import { IsNotEmpty, IsString, MaxLength, MinLength } from "class-validator";
 export class CreateMerchantDto 
 {
 
+  @MaxLength(50)
+  @MinLength(10)
   @IsString()
   @IsNotEmpty()
-  @MinLength(10)
-  @MaxLength(50)
   name: string
 
 }

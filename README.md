@@ -1,6 +1,9 @@
-# Service Core
+Service Core 😇
+---
 Main service application
 
+🖖 Usage
+---
 ## Installation
 
 ```bash
@@ -20,7 +23,10 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+✔️ Test
+---
+![Test Coverage][test-coverage-url]
+![Test End-to-End][test-e2e-url]
 
 ```bash
 # unit tests
@@ -33,13 +39,25 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Documentation
+📋 Documentation
+---
 - [Index Documentation](doc/README.md)
 - [API Documentation](doc/api/README.md)
 
-## Stay in touch
-- Author - [Raka Suryaardi Widjaja](https://idaman.id)
+🤩 Contributor
+---
+[![](https://github.com/kokoraka.png?size=50)](https://github.com/kokoraka)
 
-## License
+🚀 Roadmaps
+---
+1. MongoDB connection
+2. Dotenv configuration setting
+3. Repository implementation
+4. E2E Test
 
+📜 License
+---
 &copy; Idaman
+
+[test-coverage-url]: asset/image/test-coverage.png
+[test-e2e-url]: asset/image/test-e2e.png
