@@ -1,0 +1,7 @@
+{
+  "SUCCESS_CREATION": "Berhasil membuat {resource}",
+  "SUCCESS_UPDATE": "Berhasil memperbaharui {resource}",
+  "SUCCESS_REMOVE": "Berhasil menghapus {resource}",
+  "SUCCESS_GET_LIST": "Berhasil mendapatkan daftar {resource}",
+  "SUCCESS_GET_DETAIL": "Berhasil mendapatkan detail {resource}"
+}

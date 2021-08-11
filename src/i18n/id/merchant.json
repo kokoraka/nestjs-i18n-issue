@@ -1,0 +1,9 @@
+{
+  "HELLO_MESSAGE": "Halo {username}",
+  "USER_ADDED_PRODUCT": "{0.username} menambahkan {1.productName} ke keranjang",
+  "SETUP": {
+    "WELCOME": "Selamat datang, {0.username}",
+    "GOODBYE": "Selamat tinggal, {0.username}"
+  },
+  "ARRAY": ["Satu", "Dua", "Tiga"]
+}

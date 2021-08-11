@@ -1,0 +1,7 @@
+{
+  "SUCCESS_CREATION": "Success create {resource}",
+  "SUCCESS_UPDATE": "Success update {resource}",
+  "SUCCESS_REMOVE": "Success remove {resource}",
+  "SUCCESS_GET_LIST": "Success get {resource} list",
+  "SUCCESS_GET_DETAIL": "Success get {resource} detail"
+}
