@@ -6,7 +6,7 @@ import { MerchantService } from './merchant.service';
 import { CreateMerchantDto } from './dto/create-merchant.dto';
 import { UpdateMerchantDto } from './dto/update-merchant.dto';
 import { ListMerchantParamDto } from './dto/list-merchant.dto';
-import { I18nLang, I18nService } from 'nestjs-i18n';
+import { I18nRequestScopeService } from 'nestjs-i18n';
 
 @Controller({
   path: 'merchant',
@@ -17,15 +17,14 @@ export class MerchantController
 
   constructor(
     private readonly merchantService: MerchantService,
-    private readonly i18n: I18nService
+    private readonly i18n: I18nRequestScopeService
   ) {}
 
   @Post()
-  async create(@I18nLang() lang: string, @Body() createMerchantDto: CreateMerchantDto) 
+  async create(@Body() createMerchantDto: CreateMerchantDto) 
   {
     const result = await this.merchantService.create(createMerchantDto);
     const message = await this.i18n.translate('application.SUCCESS_CREATION', {
-      lang: lang,
       args: { resource: 'merchant' },
     });
     return {

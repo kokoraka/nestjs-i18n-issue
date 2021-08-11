@@ -70,7 +70,7 @@ describe('MerchantController', () => {
     it('should return valid data when created', async () => {
       const merchantData = new CreateMerchantDto();
       merchantData.name = 'Merchant Name';
-      const result = await controller.create('en', merchantData);
+      const result = await controller.create(merchantData);
 
       expect(result).toEqual({
         message: 'Success create merchant',
