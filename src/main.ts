@@ -1,10 +1,10 @@
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { ValidationError } from 'class-validator';
-import { AppModule } from './app.module';
-import { ValidationException } from './http-exception.entity';
-import { HttpExceptionFilter } from './http-exception.filter';
-import { TransformInterceptor } from './transform.interceptor';
+import { AppModule } from './core/app.module';
+import { ValidationException } from './core/http-exception.entity';
+import { HttpExceptionFilter } from './core/http-exception.filter';
+import { TransformInterceptor } from './core/transform.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

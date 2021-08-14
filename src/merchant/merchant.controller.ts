@@ -28,64 +28,55 @@ export class MerchantController
       lang: lang,
       args: { resource: 'merchant' },
     });
-    return {
-      message: message,
-      result: result
-    };
+    return { message, result };
   }
 
-  // @Get()
-  // async findAll(@Query() listMerchantParamDto: ListMerchantParamDto) 
-  // {
-  //   const result = await this.merchantService.findAll(listMerchantParamDto);
-  //   const message = await this.i18n.translate('application.SUCCESS_GET_LIST', {
-  //     args: { resource: 'merchant' },
-  //   });
-  //   return {
-  //     message: message,
-  //     result: result
-  //   };
-  // }
+  @Get()
+  async findAll(@I18nLang() lang: string, @Query() listMerchantParamDto: ListMerchantParamDto) 
+  {
+    const result = await this.merchantService.findAll(listMerchantParamDto);
+    const message = await this.i18n.translate('application.SUCCESS_GET_LIST', {
+      lang: lang,
+      args: { resource: 'merchant' },
+    });
+    return { message, result };
+  }
 
-  // @Get(':identifier')
-  // async findOne(@Param('identifier') identifier: string) 
-  // {
-  //   const result = await this.merchantService.findOne(identifier);
-  //   const message = await this.i18n.translate('application.SUCCESS_GET_DETAIL', {
-  //     args: { resource: 'merchant' },
-  //   });
-  //   return {
-  //     message: message,
-  //     result: result
-  //   }
-  // }
+  @Get(':identifier')
+  async findOne(@I18nLang() lang: string, @Param('identifier') identifier: string) 
+  {
+    const result = await this.merchantService.findOne(identifier);
+    const message = await this.i18n.translate('application.SUCCESS_GET_DETAIL', {
+      lang: lang,
+      args: { resource: 'merchant' },
+    });
+    return { message, result };
+  }
 
-  // @Patch(':identifier')
-  // async update(
-  //   @Param('identifier') identifier: string,
-  //   @Body() updateMerchantDto: UpdateMerchantDto,
-  // ) 
-  // {
-  //   const result = await this.merchantService.update(identifier, updateMerchantDto);
-  //   const message = await this.i18n.translate('application.SUCCESS_UPDATE', {
-  //     args: { resource: 'merchant' },
-  //   });
-  //   return {
-  //     message: message,
-  //     result: result
-  //   }
-  // }
+  @Patch(':identifier')
+  async update(
+    @I18nLang() lang: string,
+    @Param('identifier') identifier: string,
+    @Body() updateMerchantDto: UpdateMerchantDto,
+  ) 
+  {
+    const result = await this.merchantService.update(identifier, updateMerchantDto);
+    const message = await this.i18n.translate('application.SUCCESS_UPDATE', {
+      lang: lang,
+      args: { resource: 'merchant' },
+    });
+    return { message, result };
+  }
   
-  // @Delete(':identifier')
-  // async remove(@Param('identifier') identifier: string) 
-  // {
-  //   await this.merchantService.remove(identifier);
-  //   const message = await this.i18n.translate('application.SUCCESS_REMOVE', {
-  //     args: { resource: 'merchant' },
-  //   });
-  //   return {
-  //     message: message
-  //   }
-  // }
+  @Delete(':identifier')
+  async remove(@I18nLang() lang: string, @Param('identifier') identifier: string) 
+  {
+    await this.merchantService.remove(identifier);
+    const message = await this.i18n.translate('application.SUCCESS_REMOVE', {
+      lang: lang,
+      args: { resource: 'merchant' },
+    });
+    return { message };
+  }
 
 }
