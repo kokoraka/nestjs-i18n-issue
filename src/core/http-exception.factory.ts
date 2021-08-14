@@ -1,18 +1,31 @@
 import { HttpException } from "@nestjs/common";
 import { DefaultResponseBody, HttpResponse, InvalidDataResponseBody, ResponseBody, ValidationError, ValidationException } from "./http-exception.entity";
 
+interface Translator
+{
+  lang: string,
+  service: Service
+}
+
+interface Service
+{
+  translate(key: string, options?: Record<string, any>): Promise<any>
+}
 
 export abstract class ResponseFactory
 {
 
-  constructor(protected exception: HttpException) {}
+  constructor(
+    protected exception: HttpException,
+    protected translator: Translator
+  ) {}
 
-  abstract createResponseBody(): ResponseBody
+  abstract createResponseBody(): Promise<ResponseBody>
 
-  public make(): HttpResponse
+  public async make(): Promise<HttpResponse>
   {
     const httpCode = this.exception.getStatus();
-    const responseBody = this.createResponseBody();
+    const responseBody = await this.createResponseBody();
     return {
       httpCode: httpCode,
       responseBody: responseBody
@@ -24,7 +37,7 @@ export abstract class ResponseFactory
 export class DefaultResponse extends ResponseFactory
 {
 
-  public createResponseBody()
+  public async createResponseBody()
   {
     const message = this.exception.message;
     const status = this.exception.getStatus();
@@ -37,16 +50,22 @@ export class DefaultResponse extends ResponseFactory
 export class InvalidDataResponse extends ResponseFactory
 {
 
-  constructor(exception: ValidationException)
+  constructor(
+    exception: ValidationException, 
+    translator: Translator
+  )
   {
-    super(exception);
+    super(exception, translator);
   }
 
-  public createResponseBody()
+  public async createResponseBody()
   {
     const exception = this.exception as ValidationException;
+    const message = await this.translator.service.translate('application.INVALID_DATA', {
+      lang: this.translator.lang,
+    });
     return new InvalidDataResponseBody(
-      '422', 'Invalid data', exception.errors
+      '422', message, exception.errors
     );
   }
 

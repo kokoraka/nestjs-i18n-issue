@@ -3,5 +3,8 @@
   "SUCCESS_UPDATE": "Success update {resource}",
   "SUCCESS_REMOVE": "Success remove {resource}",
   "SUCCESS_GET_LIST": "Success get {resource} list",
-  "SUCCESS_GET_DETAIL": "Success get {resource} detail"
+  "SUCCESS_GET_DETAIL": "Success get {resource} detail",
+  "GENERAL_ERROR": "Error occured, please contact admin and try again later",
+  "INVALID_DATA": "There are invalid data",
+  "NOT_FOUND": "Data not found"
 }

@@ -3,5 +3,8 @@
   "SUCCESS_UPDATE": "Berhasil memperbaharui {resource}",
   "SUCCESS_REMOVE": "Berhasil menghapus {resource}",
   "SUCCESS_GET_LIST": "Berhasil mendapatkan daftar {resource}",
-  "SUCCESS_GET_DETAIL": "Berhasil mendapatkan detail {resource}"
+  "SUCCESS_GET_DETAIL": "Berhasil mendapatkan detail {resource}",
+  "GENERAL_ERROR": "Terjadi kesalahan, silahkan hubungi admin dan coba beberapa saat lagi",
+  "INVALID_DATA": "Terdapat data yang tidak valid",
+  "NOT_FOUND": "Data tidak ditemukan"
 }
