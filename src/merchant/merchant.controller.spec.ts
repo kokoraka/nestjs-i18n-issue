@@ -70,11 +70,11 @@ describe('MerchantController', () => {
     it('should return valid data when created', async () => {
       const merchantData = new CreateMerchantDto();
       merchantData.name = 'Merchant Name';
-      const result = await controller.create('en', merchantData);
+      const data = await controller.create('en', merchantData);
 
-      expect(result).toEqual({
+      expect(data).toEqual({
         message: 'Success create merchant',
-        result: {
+        data: {
           id: expect.any(String),
           name: 'Merchant Name'
         }
@@ -86,11 +86,11 @@ describe('MerchantController', () => {
   describe('findAll()', () => {
     it('should return valid data when not param passed', async () => {
       const merchantData = new ListMerchantParamDto();
-      const result = await controller.findAll('en', merchantData);
+      const data = await controller.findAll('en', merchantData);
 
-      expect(result).toEqual({
+      expect(data).toEqual({
         message: 'Success get merchant list',
-        result: expect.arrayContaining([
+        data: expect.arrayContaining([
           expect.objectContaining({
             id: expect.any(String),
             name: expect.any(String),
@@ -103,11 +103,11 @@ describe('MerchantController', () => {
     it('should return valid data when id param passed', async () => {
       const merchantData = new ListMerchantParamDto();
       merchantData.id = 'custom-id';
-      const result = await controller.findAll('en', merchantData);
+      const data = await controller.findAll('en', merchantData);
 
-      expect(result).toEqual({
+      expect(data).toEqual({
         message: 'Success get merchant list',
-        result: expect.arrayContaining([
+        data: expect.arrayContaining([
           expect.objectContaining({
             id: expect.any(String),
             name: expect.any(String),
@@ -120,11 +120,11 @@ describe('MerchantController', () => {
 
   describe('findOne()', () => {
     it('should return valid data when valid param passed', async () => {
-      const result = await controller.findOne('en', 'custom-id');
+      const data = await controller.findOne('en', 'custom-id');
 
-      expect(result).toEqual({
+      expect(data).toEqual({
         message: 'Success get merchant detail',
-        result: expect.objectContaining({
+        data: expect.objectContaining({
           id: expect.any(String),
           name: expect.any(String),
         })
@@ -142,11 +142,11 @@ describe('MerchantController', () => {
     it('should return valid data when valid param passed', async () => {
       const updateMerchantDto = new UpdateMerchantDto();
       updateMerchantDto.name = 'custom-name';
-      const result = await controller.update('en', 'custom-id', updateMerchantDto);
+      const data = await controller.update('en', 'custom-id', updateMerchantDto);
 
-      expect(result).toEqual({
+      expect(data).toEqual({
         message: 'Success update merchant',
-        result: expect.objectContaining({
+        data: expect.objectContaining({
           id: expect.any(String),
           name: expect.any(String),
         })
@@ -163,9 +163,9 @@ describe('MerchantController', () => {
 
   describe('remove()', () => {
     it('should return valid data when valid param passed', async () => {
-      const result = await controller.remove('en', 'custom-id');
+      const data = await controller.remove('en', 'custom-id');
 
-      expect(result).toEqual({
+      expect(data).toEqual({
         message: 'Success remove merchant'
       });
       expect(mockMerchantService.remove).toHaveBeenCalledWith('custom-id');
