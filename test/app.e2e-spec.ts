@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from './../src/app.module';
-import { HttpExceptionFilter } from './../src/http-exception.filter';
-import { TransformInterceptor } from './../src/transform.interceptor';
+import { AppModule } from '../src/core/app.module';
+import { HttpExceptionFilter } from '../src/core/http-exception.filter';
+import { TransformInterceptor } from '../src/core/transform.interceptor';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
