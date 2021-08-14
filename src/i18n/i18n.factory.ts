@@ -11,19 +11,19 @@ import * as path from 'path';
 export class I18NFactory 
 {
 
-  static createModule() {
+  static createModule() 
+  {
     return I18nModule.forRoot({
       fallbackLanguage: 'en',
       parser: I18nJsonParser,
       parserOptions: {
-        path: path.join(__dirname, ''),
-        watch: true,
+        path: path.join(__dirname, '')
       },
       resolvers: [
-        { use: QueryResolver, options: ['lang', 'locale', 'l'] },
+        { use: QueryResolver, options: ['lang', 'locale'] },
         new HeaderResolver(['x-lang']),
         AcceptLanguageResolver,
-        new CookieResolver(['lang', 'locale', 'l']),
+        new CookieResolver(['lang', 'locale']),
       ],
     });
   }
