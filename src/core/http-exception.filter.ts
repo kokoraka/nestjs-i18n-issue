@@ -1,3 +1,4 @@
+import { NotFoundException } from '@nestjs/common';
 import {
   ExceptionFilter,
   Catch,
@@ -9,12 +10,16 @@ import { ValidationException } from './http-exception.entity';
 import {
   DefaultResponse,
   InvalidDataResponse,
+  NotFoundResponse,
   ResponseFactory,
 } from './http-exception.factory';
 
 @Catch()
-export class HttpExceptionFilter implements ExceptionFilter {
-  async catch(exception: HttpException, host: ArgumentsHost) {
+export class HttpExceptionFilter implements ExceptionFilter 
+{
+
+  async catch(exception: HttpException, host: ArgumentsHost) 
+  {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const { i18nLang: lang, i18nService: service } = ctx.getRequest();
@@ -24,7 +29,11 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     if (exception instanceof ValidationException) {
       factory = new InvalidDataResponse(exception, translator);
-    } else {
+    }
+    else if (exception instanceof NotFoundException) {
+      factory = new NotFoundResponse(exception, translator);
+    }
+    else {
       factory = new DefaultResponse(exception, translator);
     }
 
@@ -32,4 +41,5 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     response.status(httpResponse.httpCode).json(httpResponse.responseBody);
   }
+
 }

@@ -47,6 +47,21 @@ export class DefaultResponse extends ResponseFactory
 
 }
 
+export class NotFoundResponse extends ResponseFactory
+{
+
+  public async createResponseBody()
+  {
+    const message = await this.translator.service.translate('application.NOT_FOUND', {
+      lang: this.translator.lang,
+    });
+    const status = this.exception.getStatus();
+    const code = status.toString();
+    return new DefaultResponseBody(code, message);
+  }
+
+}
+
 export class InvalidDataResponse extends ResponseFactory
 {
 
