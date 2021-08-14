@@ -54,13 +54,13 @@ describe('DefaultResponse Class', () => {
   let lang: string = 'en';
   let service = { 
     translate : async(): Promise<any> => {
-      return 'Invalid data';
+      return 'Error occured, please contact admin and try again later';
     } 
   };
   const translator = { lang, service };
 
   beforeEach(() => {
-    const exception = new HttpException('ok', 200);
+    const exception = new HttpException('General error', 400);
     factory = new DefaultResponse(exception, translator);
   });
 
@@ -68,8 +68,8 @@ describe('DefaultResponse Class', () => {
     const res = await factory.createResponseBody();
 
     expect(res).toEqual({
-      code: '200',
-      message: 'ok'
+      code: '400',
+      message: 'Error occured, please contact admin and try again later'
     });
   });
   
@@ -77,10 +77,10 @@ describe('DefaultResponse Class', () => {
     const res = await factory.make();
 
     expect(res).toEqual({
-      httpCode: 200,
+      httpCode: 400,
       responseBody: {
-        code: '200',
-        message: 'ok'
+        code: '400',
+        message: 'Error occured, please contact admin and try again later'
       }
     });
   });

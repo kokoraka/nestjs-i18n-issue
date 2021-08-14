@@ -39,7 +39,9 @@ export class DefaultResponse extends ResponseFactory
 
   public async createResponseBody()
   {
-    const message = this.exception.message;
+    const message = await this.translator.service.translate('application.GENERAL_ERROR', {
+      lang: this.translator.lang,
+    });
     const status = this.exception.getStatus();
     const code = status.toString();
     return new DefaultResponseBody(code, message);
